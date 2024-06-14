@@ -1,5 +1,6 @@
 package com.apress.BankingApi.Models;
 
+
 import jakarta.persistence.*;
 
 @Entity
