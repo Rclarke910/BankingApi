@@ -1,5 +1,6 @@
 package com.apress.BankingApi.Models;
 
+import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.Id;
@@ -8,14 +9,23 @@ import jakarta.persistence.Id;
 public class Withdrawl {
     @Id
     @GeneratedValue
+    @Column(name = "Withdrawl_ID")
     private Long id;
+    @Column(name = "Withdrawl_ID")
     private String type;
+    @Column(name = "Withdrawl_ID")
     private String transaction_date;
+    @Column(name = "Withdrawl_ID")
     private String status;
+    @Column(name = "Withdrawl_ID")
     private Long payee_id;
+    @Column(name = "Withdrawl_ID")
     private String medium;
+    @Column(name = "Withdrawl_ID")
     private Double amount;
+    @Column(name = "Withdrawl_ID")
     private String description;
+    @Column(name = "Withdrawl_ID")
 
     public Long getId() {
         return id;
