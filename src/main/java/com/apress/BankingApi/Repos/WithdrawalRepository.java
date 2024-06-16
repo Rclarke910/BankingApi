@@ -1,7 +1,7 @@
 package com.apress.BankingApi.Repos;
 
-import com.apress.BankingApi.Models.Withdrawl;
+import com.apress.BankingApi.Models.Withdrawal;
 import org.springframework.data.repository.CrudRepository;
 
-public interface WithdrawlRepository extends CrudRepository<Withdrawl, Long> {
+public interface WithdrawalRepository extends CrudRepository<Withdrawal, Long> {
 }

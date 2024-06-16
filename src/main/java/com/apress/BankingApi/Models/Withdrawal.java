@@ -6,26 +6,25 @@ import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.Id;
 
 @Entity
-public class Withdrawl {
+public class Withdrawal {
     @Id
     @GeneratedValue
-    @Column(name = "Withdrawl_ID")
+    @Column(name = "Withdrawal_ID")
     private Long id;
-    @Column(name = "Withdrawl_ID")
+    @Column(name = "Withdrawal_Type")
     private String type;
-    @Column(name = "Withdrawl_ID")
+    @Column(name = "Withdrawal_Date")
     private String transaction_date;
-    @Column(name = "Withdrawl_ID")
+    @Column(name = "Withdrawal_Status")
     private String status;
-    @Column(name = "Withdrawl_ID")
+    @Column(name = "Withdrawal_Payee")
     private Long payee_id;
-    @Column(name = "Withdrawl_ID")
+    @Column(name = "Withdrawal_Medium")
     private String medium;
-    @Column(name = "Withdrawl_ID")
+    @Column(name = "Withdrawal_amount")
     private Double amount;
-    @Column(name = "Withdrawl_ID")
+    @Column(name = "Withdrawal_Description")
     private String description;
-    @Column(name = "Withdrawl_ID")
 
     public Long getId() {
         return id;
