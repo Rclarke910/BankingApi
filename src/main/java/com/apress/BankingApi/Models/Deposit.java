@@ -13,7 +13,7 @@ public class Deposit {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
     @Enumerated(EnumType.STRING)
-    private DepositType type;
+    private String type;
     private LocalDateTime transactionDate;
     @Enumerated(EnumType.STRING)
     private TransactionStatus status;
