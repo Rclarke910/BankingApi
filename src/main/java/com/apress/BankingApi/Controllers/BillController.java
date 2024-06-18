@@ -15,8 +15,9 @@ import java.util.Optional;
 public class BillController {
     @Autowired
     private BillRepository billRepository;
+
     @RequestMapping(value="/accounts/{accountId}/bills", method= RequestMethod.GET)
-    public Optional<Bill> getBillsById(@PathVariable Long billId) {
+    public Optional<Bill> getAllBillsById(@PathVariable Long billId) {
         return billRepository.findById(billId);
     }
     @RequestMapping(value="/bills/{billId}", method=RequestMethod.GET)
@@ -24,6 +25,12 @@ public class BillController {
         Optional<Bill> b = billRepository.findById(billId);
         return new ResponseEntity<>(b, HttpStatus.OK);
     }
+//    protected void verifyBill (Long billId) throws ResourceNotFoundException{
+//        Optional <Bill> bill = billRepository.findById(billId);
+//        if (bill.isEmpty()){
+//            throw new ResourceNotFoundException("Bill" + billId + "Not Found");
+//        }
+//    }
     @RequestMapping(value="/accounts/{accountId}/bills", method= RequestMethod.POST)
     public ResponseEntity<?> createBill (@PathVariable Long accountId, @RequestBody Bill bill) {
         bill = billRepository.save(bill);
@@ -40,4 +47,11 @@ public class BillController {
         billRepository.save(bill);
         return new ResponseEntity<>(HttpStatus.OK);
     }
+    @RequestMapping(value="/bills/{billId}", method=RequestMethod.DELETE)
+    public ResponseEntity<?> deletePoll(@PathVariable Long pollId) {
+        //verifyBill(billId);
+        billRepository.deleteById(pollId);
+        return new ResponseEntity<>(HttpStatus.NO_CONTENT);
+    }
+
 }
