@@ -27,7 +27,7 @@ public class Deposit {
     public Deposit() {
     }
 
-    public Deposit(Long id, DepositType type, LocalDateTime transactionDate, TransactionStatus status, Long payeeId, String medium, Double amount, String description) {
+    public Deposit(Long id, String type, LocalDateTime transactionDate, TransactionStatus status, Long payeeId, String medium, Double amount, String description) {
         this.id = id;
         this.type = type;
         this.transactionDate = transactionDate;
@@ -46,11 +46,11 @@ public class Deposit {
         this.id = id;
     }
 
-    public DepositType getType() {
+    public String getType() {
         return type;
     }
 
-    public void setType(DepositType type) {
+    public void setType(String type) {
         this.type = type;
     }
 
