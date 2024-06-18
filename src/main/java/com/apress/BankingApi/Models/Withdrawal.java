@@ -1,20 +1,29 @@
 package com.apress.BankingApi.Models;
 
+import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.Id;
 
 @Entity
-public class Withdrawl {
+public class Withdrawal {
     @Id
     @GeneratedValue
+    @Column(name = "Withdrawal_ID")
     private Long id;
+    @Column(name = "Withdrawal_Type")
     private String type;
+    @Column(name = "Withdrawal_Date")
     private String transaction_date;
+    @Column(name = "Withdrawal_Status")
     private String status;
+    @Column(name = "Withdrawal_Payee")
     private Long payee_id;
+    @Column(name = "Withdrawal_Medium")
     private String medium;
+    @Column(name = "Withdrawal_amount")
     private Double amount;
+    @Column(name = "Withdrawal_Description")
     private String description;
 
     public Long getId() {
