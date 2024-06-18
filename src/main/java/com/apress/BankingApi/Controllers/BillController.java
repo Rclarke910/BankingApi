@@ -15,8 +15,9 @@ import java.util.Optional;
 public class BillController {
     @Autowired
     private BillRepository billRepository;
+
     @RequestMapping(value="/accounts/{accountId}/bills", method= RequestMethod.GET)
-    public Optional<Bill> getBillsById(@PathVariable Long billId) {
+    public Optional<Bill> getAllBillsById(@PathVariable Long billId) {
         return billRepository.findById(billId);
     }
     @RequestMapping(value="/bills/{billId}", method=RequestMethod.GET)
@@ -40,4 +41,11 @@ public class BillController {
         billRepository.save(bill);
         return new ResponseEntity<>(HttpStatus.OK);
     }
+    @RequestMapping(value="/bills/{billId}", method=RequestMethod.DELETE)
+    public ResponseEntity<?> deletePoll(@PathVariable Long pollId) {
+        //verifyPoll(pollId);
+        billRepository.deleteById(pollId);
+        return new ResponseEntity<>(HttpStatus.NO_CONTENT);
+    }
+
 }
