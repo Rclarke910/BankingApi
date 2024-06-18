@@ -1,7 +1,7 @@
 package com.apress.BankingApi.Models;
 
-
-
+import com.apress.BankingApi.Enums.Medium;
+import com.apress.BankingApi.Enums.TransactionType;
 import jakarta.persistence.*;
 import org.hibernate.resource.transaction.spi.TransactionStatus;
 
@@ -12,13 +12,13 @@ public class Deposit {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
     @Enumerated(EnumType.STRING)
-    private String type;
+    private TransactionType type;
     private LocalDateTime transactionDate;
     @Enumerated(EnumType.STRING)
     private TransactionStatus status;
     private Long payeeId;
     @Enumerated(EnumType.STRING)
-    private String medium;
+    private Medium medium;
     private Double amount;
     private String description;
 
@@ -26,7 +26,7 @@ public class Deposit {
     public Deposit() {
     }
 
-    public Deposit(Long id, String type, LocalDateTime transactionDate, TransactionStatus status, Long payeeId, String medium, Double amount, String description) {
+    public Deposit(Long id, TransactionType type, LocalDateTime transactionDate, TransactionStatus status, Long payeeId, Medium medium, Double amount, String description) {
         this.id = id;
         this.type = type;
         this.transactionDate = transactionDate;
@@ -45,11 +45,11 @@ public class Deposit {
         this.id = id;
     }
 
-    public String getType() {
+    public TransactionType getType() {
         return type;
     }
 
-    public void setType(String type) {
+    public void setType(TransactionType type) {
         this.type = type;
     }
 
@@ -77,11 +77,11 @@ public class Deposit {
         this.payeeId = payeeId;
     }
 
-    public String getMedium() {
+    public Medium getMedium() {
         return medium;
     }
 
-    public void setMedium(String medium) {
+    public void setMedium(Medium medium) {
         this.medium = medium;
     }
 
