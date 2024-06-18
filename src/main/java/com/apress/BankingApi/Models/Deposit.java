@@ -2,7 +2,6 @@ package com.apress.BankingApi.Models;
 
 
 
-import com.apress.BankingApi.Enums.DepositType;
 import jakarta.persistence.*;
 import org.hibernate.resource.transaction.spi.TransactionStatus;
 
