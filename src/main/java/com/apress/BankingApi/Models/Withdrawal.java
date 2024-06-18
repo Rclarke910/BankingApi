@@ -1,5 +1,8 @@
 package com.apress.BankingApi.Models;
 
+import com.apress.BankingApi.Enums.AccountType;
+import com.apress.BankingApi.Enums.Medium;
+import com.apress.BankingApi.Enums.Status;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
@@ -12,15 +15,15 @@ public class Withdrawal {
     @Column(name = "Withdrawal_ID")
     private Long id;
     @Column(name = "Withdrawal_Type")
-    private String type;
+    private AccountType type;
     @Column(name = "Withdrawal_Date")
     private String transaction_date;
     @Column(name = "Withdrawal_Status")
-    private String status;
+    private Status status;
     @Column(name = "Withdrawal_Payee")
     private Long payee_id;
     @Column(name = "Withdrawal_Medium")
-    private String medium;
+    private Medium medium;
     @Column(name = "Withdrawal_amount")
     private Double amount;
     @Column(name = "Withdrawal_Description")
@@ -34,14 +37,6 @@ public class Withdrawal {
         this.id = id;
     }
 
-    public String getType() {
-        return type;
-    }
-
-    public void setType(String type) {
-        this.type = type;
-    }
-
     public String getTransaction_date() {
         return transaction_date;
     }
@@ -50,28 +45,12 @@ public class Withdrawal {
         this.transaction_date = transaction_date;
     }
 
-    public String getStatus() {
-        return status;
-    }
-
-    public void setStatus(String status) {
-        this.status = status;
-    }
-
     public Long getPayee_id() {
         return payee_id;
     }
 
     public void setPayee_id(Long payee_id) {
         this.payee_id = payee_id;
-    }
-
-    public String getMedium() {
-        return medium;
-    }
-
-    public void setMedium(String medium) {
-        this.medium = medium;
     }
 
     public Double getAmount() {
@@ -88,5 +67,29 @@ public class Withdrawal {
 
     public void setDescription(String description) {
         this.description = description;
+    }
+
+    public AccountType getType() {
+        return type;
+    }
+
+    public void setType(AccountType type) {
+        this.type = type;
+    }
+
+    public Status getStatus() {
+        return status;
+    }
+
+    public void setStatus(Status status) {
+        this.status = status;
+    }
+
+    public Medium getMedium() {
+        return medium;
+    }
+
+    public void setMedium(Medium medium) {
+        this.medium = medium;
     }
 }
