@@ -1,8 +1,10 @@
 package com.apress.BankingApi.Services;
 
+import com.apress.BankingApi.Models.Account;
 import com.apress.BankingApi.Models.Withdrawal;
 import com.apress.BankingApi.Repos.AccountRepository;
 import com.apress.BankingApi.Repos.WithdrawalRepository;
+import jakarta.persistence.EntityNotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -15,7 +17,12 @@ public class WithdrawalService {
    @Autowired
    private AccountRepository accountRepo;
 
-
+    public void verifyAccount(long id) {
+        Optional<Account> account = accountRepo.findById(id);
+        if(account.isEmpty()){
+            throw new EntityNotFoundException("Account not found");
+        }
+    }
 
     public Iterable<Withdrawal> getAllWithdrawals(){
             return withdrawalRepo.findAll();
