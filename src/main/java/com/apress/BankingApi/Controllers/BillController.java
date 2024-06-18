@@ -25,6 +25,12 @@ public class BillController {
         Optional<Bill> b = billRepository.findById(billId);
         return new ResponseEntity<>(b, HttpStatus.OK);
     }
+//    protected void verifyBill (Long billId) throws ResourceNotFoundException{
+//        Optional <Bill> bill = billRepository.findById(billId);
+//        if (bill.isEmpty()){
+//            throw new ResourceNotFoundException("Bill" + billId + "Not Found");
+//        }
+//    }
     @RequestMapping(value="/accounts/{accountId}/bills", method= RequestMethod.POST)
     public ResponseEntity<?> createBill (@PathVariable Long accountId, @RequestBody Bill bill) {
         bill = billRepository.save(bill);
@@ -43,7 +49,7 @@ public class BillController {
     }
     @RequestMapping(value="/bills/{billId}", method=RequestMethod.DELETE)
     public ResponseEntity<?> deletePoll(@PathVariable Long pollId) {
-        //verifyPoll(pollId);
+        //verifyBill(billId);
         billRepository.deleteById(pollId);
         return new ResponseEntity<>(HttpStatus.NO_CONTENT);
     }
