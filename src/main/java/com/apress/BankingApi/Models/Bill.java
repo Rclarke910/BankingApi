@@ -2,9 +2,10 @@ package com.apress.BankingApi.Models;
 
 import com.apress.BankingApi.Enums.Status;
 import jakarta.persistence.Column;
+import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.Id;
-
+@Entity
 public class Bill {
     @Id
     @GeneratedValue
