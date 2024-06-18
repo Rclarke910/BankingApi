@@ -28,9 +28,14 @@ public class DepositController {
         return depositService.getAllDeposits();
     }
 
-    @GetMapping("/deposits/{id}")
+    @GetMapping("/deposits/{accountId}")
     public Optional<Deposit> getDepositById(@PathVariable long id) {
         return depositService.getDepositById(id);
+    }
+
+    @PostMapping("/deposits")
+    public void addDeposit(@RequestBody Deposit deposit) {
+        depositService.saveDeposit(deposit);
     }
 
 }
