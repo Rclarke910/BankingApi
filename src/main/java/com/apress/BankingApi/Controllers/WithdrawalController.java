@@ -30,7 +30,8 @@ public class WithdrawalController {
         return new ResponseEntity<> (w, HttpStatus.OK);
     }
     @RequestMapping(value = "accounts/{accountID}/withdrawals", method = RequestMethod.POST)
-    public ResponseEntity<?> createWithdrawal(@Valid @RequestBody Withdrawal withdrawal) {
+    public ResponseEntity<?> createWithdrawal(@Valid @RequestBody Withdrawal withdrawal,@PathVariable Long accountID) {
+        withdrawalService.verifyAccount(accountID);
         withdrawalService.createWithdrawal(withdrawal);
 
         HttpHeaders responseHeaders = new HttpHeaders();
