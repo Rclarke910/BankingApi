@@ -11,6 +11,8 @@ public class Bill {
     private Long id;
     @Enumerated(EnumType.STRING)
     private Status status;
+    @ManyToOne
+    private long account_id;
     private String payee;
     private String nickname;
     private String creation_date;
@@ -18,7 +20,6 @@ public class Bill {
     private Integer recurring_date;
     private String upcoming_payment_date;
     private Double payment_amount;
-    private String account_id;
 
     public Long getId() {
         return id;
