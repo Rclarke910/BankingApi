@@ -27,11 +27,14 @@ public class DepositController {
     @Autowired
     private AccountRepository accountRepository;
 
-    @GetMapping
-    public ResponseEntity<List<Deposit>> getAllDeposits(@PathVariable Long accountId) {
-        List<Deposit> deposits = depositRepository.findDepositById(accountId);
-        return ResponseEntity.ok(deposits);
-    }
+    @Autowired
+    private DepositService depositService;
+
+//    @GetMapping
+//    public ResponseEntity<List<Deposit>> getAllDeposits(@PathVariable Long accountId) {
+//        List<Deposit> deposits = depositRepository.findDepositById(accountId);
+//        return ResponseEntity.ok(deposits);
+//    }
 
     @GetMapping("/{depositId}")
     public ResponseEntity<Deposit> getDepositById(@PathVariable Long accountId, @PathVariable Long depositId) {
@@ -80,6 +83,12 @@ public class DepositController {
         } else {
             return ResponseEntity.notFound().build();
         }
+    }
+
+    @GetMapping("/deposits")
+    public ResponseEntity<List<Deposit>> getAllDeposits() {
+        List<Deposit> deposits = depositService.getAllDeposits();
+        return ResponseEntity.ok(deposits);
     }
 
 }
