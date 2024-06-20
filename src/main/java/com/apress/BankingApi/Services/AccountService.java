@@ -25,23 +25,24 @@ public class AccountService {
         }
     }
 
-    public void createAccount(Account account, long customerId){
+    public Account createAccount(Account account, long customerId){
         Customer customer = customerRepository.findById(customerId)
                 .orElseThrow(() -> new EntityNotFoundException("Customer not found with id: " + customerId));
         account.setCustomer(customer);
-        accountRepository.save(account);}
+        return accountRepository.save(account);
+    }
 
     public Optional<Account> getAccountById(long id){return accountRepository.findById(id);}
 
     public Iterable<Account> getAllAccounts(){return accountRepository.findAll();}
 
-    public List<Account> getAccountsByCustomerId(Long customerId) {
+    public Optional<Account> getAccountsByCustomerId(Long customerId) {
         return accountRepository.findByCustomerId(customerId);
     }
 
-    public void updateAccount(long id,Account account){
+    public Account updateAccount(long id,Account account){
         verifyAccount(id);
-        accountRepository.save(account);
+       return accountRepository.save(account);
     }
 
     public void deleteAccount(long id){
