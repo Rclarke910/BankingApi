@@ -3,25 +3,25 @@ package com.apress.BankingApi.Models;
 import com.apress.BankingApi.Enums.AccountType;
 import com.apress.BankingApi.Enums.Medium;
 import com.apress.BankingApi.Enums.Status;
-import jakarta.persistence.Column;
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.Id;
+import jakarta.persistence.*;
 
 @Entity
 public class Withdrawal {
     @Id
-    @GeneratedValue
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "Withdrawal_ID")
     private Long id;
+    @Enumerated(EnumType.STRING)
     @Column(name = "Withdrawal_Type")
     private AccountType type;
     @Column(name = "Withdrawal_Date")
     private String transaction_date;
+    @Enumerated(EnumType.STRING)
     @Column(name = "Withdrawal_Status")
     private Status status;
     @Column(name = "Withdrawal_Payee")
     private Long payee_id;
+    @Enumerated(EnumType.STRING)
     @Column(name = "Withdrawal_Medium")
     private Medium medium;
     @Column(name = "Withdrawal_amount")

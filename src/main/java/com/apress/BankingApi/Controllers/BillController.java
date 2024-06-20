@@ -17,6 +17,7 @@ public class BillController {
 
     @RequestMapping(value="/accounts/{accountId}/bills", method= RequestMethod.GET)
     public ResponseEntity<?> getAllBillsById (@PathVariable Long accountId){
+      
     ResponseEntity<?> b = billResponse.getAllBills(accountId) ;
         return new ResponseEntity<>(b, HttpStatus.OK);
     }
