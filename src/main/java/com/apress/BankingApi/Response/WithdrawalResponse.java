@@ -17,7 +17,7 @@ public class WithdrawalResponse {
     @Autowired
     WithdrawalService withdrawalService;
 
-    public ResponseEntity<?> getAcountWithdrawals(){
+    public ResponseEntity<?> getAccountWithdrawals(Long accoumtID){
         try {
 
             Body body = new Body();
