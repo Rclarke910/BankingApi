@@ -40,7 +40,6 @@ public class WithdrawalService {
                 withdrawalRepo.save(withdrawal);
             }
         }
-
         return withdrawal;
     }
     public void deleteWithdrawalById(Long id){
