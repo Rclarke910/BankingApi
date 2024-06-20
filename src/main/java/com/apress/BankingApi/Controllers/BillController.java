@@ -18,8 +18,8 @@ public class BillController {
     private BillRepository billRepository;
 
     @RequestMapping(value="/accounts/{accountId}/bills", method= RequestMethod.GET)
-    public ResponseEntity<?> getAllBillsById (@PathVariable Long billId){
-    Optional<Bill> b = billRepository.findById(billId) ;
+    public ResponseEntity<?> getAllBillsById (@PathVariable Long accountId){
+    Optional<Bill> b = billRepository.findById(accountId) ;
         return new ResponseEntity<>(b, HttpStatus.OK);
     }
     @RequestMapping(value="/bills/{billId}", method=RequestMethod.GET)
