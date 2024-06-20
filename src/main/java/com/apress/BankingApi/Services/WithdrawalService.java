@@ -31,15 +31,17 @@ public class WithdrawalService {
     public Optional<Withdrawal> getWithdrawalByID(Long withdrawalId){
         return withdrawalRepo.findById(withdrawalId);
     }
-    public void createWithdrawal(Withdrawal withdrawal){
-        withdrawalRepo.save(withdrawal);
+    public Withdrawal createWithdrawal(Withdrawal withdrawal){
+        return withdrawalRepo.save(withdrawal);
     }
-    public void updateWithdrawal(Long id, Withdrawal withdrawal){
+    public Withdrawal updateWithdrawal(Long id, Withdrawal withdrawal){
         for(Withdrawal w : getAllWithdrawals()){
             if(w.getId().equals(id)){
                 withdrawalRepo.save(withdrawal);
             }
         }
+
+        return withdrawal;
     }
     public void deleteWithdrawalById(Long id){
         withdrawalRepo.deleteById(id);
