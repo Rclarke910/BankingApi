@@ -1,5 +1,6 @@
 package com.apress.BankingApi.Controllers;
 
+import com.apress.BankingApi.Exception.ResourceNotFoundException;
 import com.apress.BankingApi.Models.Bill;
 import com.apress.BankingApi.Repos.BillRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -21,16 +22,16 @@ public class BillController {
         return billRepository.findById(billId);
     }
     @RequestMapping(value="/bills/{billId}", method=RequestMethod.GET)
-    public ResponseEntity<?> getBillById(@PathVariable Long billId) {
+    public ResponseEntity<?> getBill(@PathVariable Long billId) {
         Optional<Bill> b = billRepository.findById(billId);
         return new ResponseEntity<>(b, HttpStatus.OK);
     }
-//    protected void verifyBill (Long billId) throws ResourceNotFoundException{
-//        Optional <Bill> bill = billRepository.findById(billId);
-//        if (bill.isEmpty()){
-//            throw new ResourceNotFoundException("Bill" + billId + "Not Found");
-//        }
-//    }
+    protected void verifyBill (Long billId) throws ResourceNotFoundException{
+        Optional <Bill> bill = billRepository.findById(billId);
+        if (bill.isEmpty()){
+            throw new ResourceNotFoundException("Bill" + billId + "Not Found");
+        }
+    }
     @RequestMapping(value="/accounts/{accountId}/bills", method= RequestMethod.POST)
     public ResponseEntity<?> createBill (@PathVariable Long accountId, @RequestBody Bill bill) {
         bill = billRepository.save(bill);
@@ -48,9 +49,9 @@ public class BillController {
         return new ResponseEntity<>(HttpStatus.OK);
     }
     @RequestMapping(value="/bills/{billId}", method=RequestMethod.DELETE)
-    public ResponseEntity<?> deletePoll(@PathVariable Long pollId) {
-        //verifyBill(billId);
-        billRepository.deleteById(pollId);
+    public ResponseEntity<?> deleteBill(@PathVariable Long billId) {
+        verifyBill(billId);
+        billRepository.deleteById(billId);
         return new ResponseEntity<>(HttpStatus.NO_CONTENT);
     }
 
