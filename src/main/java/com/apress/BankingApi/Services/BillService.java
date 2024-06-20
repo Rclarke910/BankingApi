@@ -23,9 +23,10 @@ public class BillService {
     public List<Bill> getBillsByAccountId(Long accountId) {
         return billRepository.findByAccountId(accountId);
     }
-//    public List<Bill> getBillsByCustomerId(Long customerId) {
-//        return billRepository.findByCustomerId(customerId);
-//    }
+    public Optional<Bill> getAllCustomerBills(Long customer_Id) throws Exception {
+        billRepository.findById(customer_Id);
+        return billRepository.findById(customer_Id);
+    }
     public Bill createBill(Bill bill) throws CustomerNotFoundException {
 
        // logger.info("successfully created Customer");

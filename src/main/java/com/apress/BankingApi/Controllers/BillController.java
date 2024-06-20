@@ -3,6 +3,7 @@ package com.apress.BankingApi.Controllers;
 import com.apress.BankingApi.Exception.ResourceNotFoundException;
 import com.apress.BankingApi.Models.Bill;
 import com.apress.BankingApi.Response.BillResponse;
+import com.apress.BankingApi.Services.BillService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
@@ -14,6 +15,8 @@ import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 public class BillController {
     @Autowired
     private BillResponse billResponse;
+    @Autowired
+    private BillService billService;
 
     @RequestMapping(value="/accounts/{accountId}/bills", method= RequestMethod.GET)
     public ResponseEntity<?> getAllBillsById (@PathVariable Long accountId){
@@ -51,8 +54,8 @@ public class BillController {
     }
 
     @RequestMapping(value = "/customers/{customerId}/bills", method = RequestMethod.GET)
-    public ResponseEntity<?> getAllBillsForCustomer (@PathVariable Long customerID){
-        billResponse.getAllBills(customerID);
+    public ResponseEntity<?> getAllBillsForCustomer (@PathVariable Long customerID) throws Exception {
+        billService.getAllCustomerBills(customerID);
                 return new ResponseEntity<>(HttpStatus.OK);
     }
     @RequestMapping(value="/bills/{billId}", method=RequestMethod.DELETE)
