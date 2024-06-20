@@ -2,7 +2,6 @@ package com.apress.BankingApi.Services;
 
 
 import com.apress.BankingApi.Exception.ResourceNotFoundException;
-import com.apress.BankingApi.Exceptions.CustomerNotFoundException;
 import com.apress.BankingApi.Models.Deposit;
 import com.apress.BankingApi.Repos.AccountRepository;
 import com.apress.BankingApi.Repos.DepositRepository;
@@ -10,17 +9,18 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 
-import java.util.ArrayList;
 import java.util.List;
-import java.util.Optional;
 
-    @Service
+@Service
     public class DepositService {
 
         @Autowired
         private DepositRepository depositRepository;
         @Autowired
         private AccountRepository accountRepository;
+
+        @Autowired
+        private DepositService depositService;
 
         // Verify
         public void verifyDepositById(Long id) {
@@ -36,8 +36,8 @@ import java.util.Optional;
         }
 
         // Create
-        public Deposit createDeposit(Deposit deposit, Long accountId) {
-            verifyAccountById(accountId);
+        public Deposit createDeposit(Deposit deposit) {
+            verifyAccountById(deposit.getPayeeId());
             return depositRepository.save(deposit);
         }
 
@@ -68,5 +68,10 @@ import java.util.Optional;
             verifyDepositById(id);
             depositRepository.deleteById(id);
         }
+
+    // Get All Deposits
+    public List<Deposit> getAllDeposits() {
+        return depositService.getAllDeposits();
     }
+}
 
