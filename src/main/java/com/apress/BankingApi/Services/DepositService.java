@@ -66,6 +66,11 @@ import java.util.List;
         verifyDepositById(id);
         depositRepository.deleteById(id);
     }
+
+    // Get All
+    public List<Deposit> getAllDeposits() {
+        return (List<Deposit>) depositRepository.findAll();
+    }
 }
 
 //    // Get All Deposits
