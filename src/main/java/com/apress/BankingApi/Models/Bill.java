@@ -18,7 +18,9 @@ public class Bill {
     private Integer recurring_date;
     private String upcoming_payment_date;
     private Double payment_amount;
-    private String account_id;
+    @ManyToOne
+    @JoinColumn(name = "account_id")
+    private Account account;
 
     public Long getId() {
         return id;
@@ -92,11 +94,11 @@ public class Bill {
         this.payment_amount = payment_amount;
     }
 
-    public String getAccount_id() {
-        return account_id;
+    public Account getAccount() {
+        return account;
     }
 
-    public void setAccount_id(String account_id) {
-        this.account_id = account_id;
+    public void setAccount(Account account) {
+        this.account = account;
     }
 }

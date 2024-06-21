@@ -1,9 +1,12 @@
 package com.apress.BankingApi.Services;
 
 import com.apress.BankingApi.Exception.CustomerNotFoundException;
+import com.apress.BankingApi.Models.Account;
 import com.apress.BankingApi.Models.Bill;
+import com.apress.BankingApi.Repos.AccountRepository;
 import com.apress.BankingApi.Repos.BillRepository;
 import com.apress.BankingApi.Repos.CustomerRepository;
+import jakarta.persistence.EntityNotFoundException;
 import jakarta.persistence.PostUpdate;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -16,6 +19,8 @@ public class BillService {
     private BillRepository billRepository;
     @Autowired
     private CustomerRepository customerRepository;
+    @Autowired
+    private AccountRepository accountRepository;
     public void saveBill(Bill bill)
     {
         billRepository.save(bill);
@@ -23,11 +28,14 @@ public class BillService {
     public List<Bill> getBillsByAccountId(Long accountId) {
         return billRepository.findByAccountId(accountId);
     }
-    public Optional<Bill> getAllCustomerBills(Long customer_Id) throws Exception {
+    public List <Bill> getAllCustomerBills(Long customer_Id) throws Exception {
         billRepository.findById(customer_Id);
-        return billRepository.findById(customer_Id);
+        return billRepository.findByCustomerId(customer_Id);
     }
-    public Bill createBill(Bill bill) throws CustomerNotFoundException {
+    public Bill createBill(Bill bill, Long accountId) throws CustomerNotFoundException {
+        Account account = accountRepository.findById(accountId)
+                .orElseThrow(() -> new EntityNotFoundException("Customer not found with id: " + accountId));
+       bill.setAccount(account);
 
        // logger.info("successfully created Customer");
         return billRepository.save(bill);
