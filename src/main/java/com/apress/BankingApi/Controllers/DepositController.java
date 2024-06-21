@@ -1,5 +1,6 @@
 package com.apress.BankingApi.Controllers;
 
+import com.apress.BankingApi.Models.Account;
 import com.apress.BankingApi.Models.Deposit;
 import com.apress.BankingApi.Repos.AccountRepository;
 import com.apress.BankingApi.Repos.DepositRepository;
@@ -13,26 +14,54 @@ import org.springframework.boot.SpringApplication;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import com.apress.BankingApi.Models.Deposit;
 
 import java.util.List;
 import java.util.Optional;
 
 
 @RestController
-
 public class DepositController {
-
+    @Autowired
+    private DepositResponse depositResponse;
     @Autowired
     private DepositRepository depositRepository;
-
     @Autowired
     private AccountRepository accountRepository;
-
     @Autowired
     private DepositService depositService;
 
-    @Autowired
-  private   DepositResponse depositResponse;
+//    @Autowired
+//    private DepositResponse depositResponse;
+//
+//    @RequestMapping(value = "/accounts/{accountId}/deposits", method = RequestMethod.GET)
+//    public ResponseEntity<?> getAllDeposits(@PathVariable Long depositId) {
+//        return new ResponseEntity<>(depositResponse.getAllDeposits(depositId), HttpStatus.OK);
+//    }
+//
+//    @RequestMapping(value = "/deposits/{depositId}", method = RequestMethod.GET)
+//    public ResponseEntity<?> getDepositById(@PathVariable Long depositId) {
+//        return new ResponseEntity<>(depositResponse.getDepositById(depositId), HttpStatus.OK);
+//    }
+//
+//    @RequestMapping(value = "/accounts/{accountId}/deposits", method = RequestMethod.POST)
+//    public ResponseEntity<?> createDeposit(@PathVariable Long accountId, @Valid @RequestBody Deposit deposit) {
+//        return new ResponseEntity<>(depositResponse.createDeposit(deposit), HttpStatus.CREATED);
+//    }
+//
+//    @RequestMapping(value = "/deposits/{depositId}", method = RequestMethod.PUT)
+//    public ResponseEntity<?> updateDeposit(@RequestBody Deposit deposit, @PathVariable Long depositId) {
+//        return new ResponseEntity<>(depositResponse.updateDeposit(deposit, depositId), HttpStatus.ACCEPTED);
+//
+//    }
+//
+//    @RequestMapping(value = "/deposits/{depositId}", method = RequestMethod.DELETE)
+//    public ResponseEntity<?> deleteDeposit(@PathVariable Long depositId) {
+//        return new ResponseEntity<>(depositResponse.deleteDeposit(depositId), HttpStatus.OK);
+//    }
+//
+//}
+
 
 //    @GetMapping
 //    public ResponseEntity<List<Deposit>> getAllDeposits(@PathVariable Long accountId) {
@@ -41,9 +70,9 @@ public class DepositController {
 //    }
 
     @GetMapping(value = "/deposits/{depositId}")
-   public ResponseEntity<?> getDepositById(@PathVariable Long depositId) {
-       return new ResponseEntity<>(depositResponse.getDepositById(depositId), HttpStatus.OK);
-   }
+    public ResponseEntity<?> getDepositById(@PathVariable Long depositId) {
+        return new ResponseEntity<>(depositResponse.getDepositById(depositId), HttpStatus.OK);
+    }
 
     @PostMapping(value = "/accounts/{accountId}/deposits")
     public ResponseEntity<Deposit> createDeposit(@PathVariable Long accountId, @Valid @RequestBody Deposit deposit) {
@@ -89,5 +118,5 @@ public class DepositController {
     public ResponseEntity<?> getAllDeposits() {
         return new ResponseEntity<>(depositResponse.getAllDeposits(), HttpStatus.OK);
     }
-
 }
+
