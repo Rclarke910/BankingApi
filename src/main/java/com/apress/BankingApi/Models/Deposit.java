@@ -1,23 +1,20 @@
 package com.apress.BankingApi.Models;
 
-import com.apress.BankingApi.Enums.Medium;
-import com.apress.BankingApi.Enums.TransactionType;
 import jakarta.persistence.*;
-import org.hibernate.resource.transaction.spi.TransactionStatus;
 
 @Entity
 public class Deposit {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-    @Enumerated(EnumType.STRING)
-    private TransactionType type;
+
+    private String type;
     private String transactionDate;
-    @Enumerated(EnumType.STRING)
-    private TransactionStatus status;
+
+    private String status;
     private Long payeeId;
-    @Enumerated(EnumType.STRING)
-    private Medium medium;
+
+    private String medium;
     private Double amount;
     private String description;
 
@@ -25,7 +22,7 @@ public class Deposit {
     public Deposit() {
     }
 
-    public Deposit(Long id, TransactionType type, String transactionDate, TransactionStatus status, Long payeeId, Medium medium, Double amount, String description) {
+    public Deposit(Long id, String type, String transactionDate, String status, Long payeeId, String medium, Double amount, String description) {
         this.id = id;
         this.type = type;
         this.transactionDate = transactionDate;
@@ -44,11 +41,11 @@ public class Deposit {
         this.id = id;
     }
 
-    public TransactionType getType() {
+    public String getType() {
         return type;
     }
 
-    public void setType(TransactionType type) {
+    public void setType(String type) {
         this.type = type;
     }
 
@@ -60,11 +57,11 @@ public class Deposit {
         this.transactionDate = transactionDate;
     }
 
-    public TransactionStatus getStatus() {
+    public String getStatus() {
         return status;
     }
 
-    public void setStatus(TransactionStatus status) {
+    public void setStatus(String status) {
         this.status = status;
     }
 
@@ -76,11 +73,11 @@ public class Deposit {
         this.payeeId = payeeId;
     }
 
-    public Medium getMedium() {
+    public String getMedium() {
         return medium;
     }
 
-    public void setMedium(Medium medium) {
+    public void setMedium(String medium) {
         this.medium = medium;
     }
 
