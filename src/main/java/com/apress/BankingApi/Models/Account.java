@@ -7,7 +7,6 @@ import jakarta.persistence.*;
 public class Account {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "ACCOUNT_ID")
     private Long id;
 
     @Enumerated(EnumType.STRING)
@@ -20,6 +19,12 @@ public class Account {
     @ManyToOne
     @JoinColumn(name = "customer_id")
     private Customer customer;
+
+    public Account() {}
+
+    public Account(Long id) {
+        this.id = id;
+    }
 
     public Integer getRewards() {
         return rewards;
