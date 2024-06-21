@@ -1,5 +1,6 @@
 package com.apress.BankingApi.Response;
 
+import com.apress.BankingApi.Exception.ResourceNotFoundException;
 import com.apress.BankingApi.Models.Deposit;
 import com.apress.BankingApi.Services.DepositService;
 import com.apress.BankingApi.dto.Body;
@@ -14,10 +15,9 @@ public class DepositResponse {
     @Autowired
     DepositService depositService;
 
-    public ResponseEntity<?> createDeposit(Deposit deposit) {
+    public ResponseEntity<?> createDeposit(Deposit deposit, Long accountId) {
         try {
-            Deposit createdDeposit = depositService.createDeposit(deposit);
-
+            Deposit createdDeposit = depositService.createDeposit(deposit, accountId);
             Body body = new Body();
             body.setData(createdDeposit);
             body.setCode(HttpStatus.CREATED.value());
@@ -32,13 +32,12 @@ public class DepositResponse {
             return new ResponseEntity<>(body, HttpStatus.INTERNAL_SERVER_ERROR);
         }
     }
-
     public ResponseEntity<?> getAllDeposits() {
         try {
             Body body = new Body();
             body.setData(depositService.getAllDeposits());
             body.setCode(HttpStatus.OK.value());
-            body.setMessage("Successfully retrieved Deposits");
+            body.setMessage("Successfully retrieved all Deposits");
 
             return new ResponseEntity<>(body, HttpStatus.OK);
         } catch (Exception exception) {
@@ -49,7 +48,6 @@ public class DepositResponse {
             return new ResponseEntity<>(body, HttpStatus.NOT_FOUND);
         }
     }
-
     public ResponseEntity<?> getDepositById(Long depositId) {
         try {
             Optional<Deposit> deposit = Optional.ofNullable(depositService.getDepositById(depositId));
@@ -76,10 +74,9 @@ public class DepositResponse {
             return new ResponseEntity<>(body, HttpStatus.INTERNAL_SERVER_ERROR);
         }
     }
-
     public ResponseEntity<?> updateDeposit(Deposit updatedDeposit, Long depositId) {
         try {
-            Deposit editedDeposit = depositService.updateDeposit(updatedDeposit);
+            Deposit editedDeposit = depositService.updateDeposit(updatedDeposit, depositId);
 
             if (editedDeposit != null) {
                 Body body = new Body();
@@ -95,15 +92,23 @@ public class DepositResponse {
 
                 return new ResponseEntity<>(body, HttpStatus.NOT_FOUND);
             }
-        } finally {
+        } catch (ResourceNotFoundException e) {
+            Body body = new Body();
+            body.setCode(HttpStatus.NOT_FOUND.value());
+            body.setMessage(e.getMessage());
 
+            return new ResponseEntity<>(body, HttpStatus.NOT_FOUND);
+
+        } catch (Exception e) {
+            Body body = new Body();
+            body.setCode(HttpStatus.INTERNAL_SERVER_ERROR.value());
+            body.setMessage("Error updating Deposit");
+            return new ResponseEntity<>(body, HttpStatus.INTERNAL_SERVER_ERROR);
         }
     }
-
     public ResponseEntity<?> deleteDeposit(Long depositId) {
         try {
             depositService.deleteDepositById(depositId);
-
             Body body = new Body();
             body.setCode(HttpStatus.OK.value());
             body.setMessage("Deposit deleted successfully");
@@ -117,6 +122,5 @@ public class DepositResponse {
             return new ResponseEntity<>(body, HttpStatus.INTERNAL_SERVER_ERROR);
         }
     }
-
 }
 
