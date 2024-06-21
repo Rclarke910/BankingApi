@@ -1,11 +1,14 @@
 package com.apress.BankingApi.Services;
 
+import com.apress.BankingApi.Enums.TransactionType;
 import com.apress.BankingApi.Models.Account;
 import com.apress.BankingApi.Models.Customer;
+import com.apress.BankingApi.Models.Deposit;
 import com.apress.BankingApi.Models.Withdrawal;
 import com.apress.BankingApi.Repos.AccountRepository;
 import com.apress.BankingApi.Repos.WithdrawalRepository;
 import jakarta.persistence.EntityNotFoundException;
+import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -31,6 +34,12 @@ public class WithdrawalService {
     public Iterable<Withdrawal> getAllAccountWithdrawals(long accountID)
     {
         return withdrawalRepo.findByAccountId(accountID);
+    }
+    public Withdrawal peerWithdrawalFromDeposit(long payerID, Deposit deposit)
+    {
+        Account payer = accountRepository.findById(payerID).orElseThrow(() -> new EntityNotFoundException("Account not found with id: " + payerID));
+        Withdrawal constructWithdrawal = new Withdrawal(TransactionType.P2P,payer,deposit.getMedium(), deposit.getAmount(), deposit.getDescription());
+        return withdrawalRepo.save(constructWithdrawal);
     }
     public Optional<Withdrawal> getWithdrawalByID(Long withdrawalId){
         return withdrawalRepo.findById(withdrawalId);

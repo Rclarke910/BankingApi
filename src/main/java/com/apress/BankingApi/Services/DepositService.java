@@ -1,9 +1,11 @@
 package com.apress.BankingApi.Services;
 
 import com.apress.BankingApi.Exception.ResourceNotFoundException;
+import com.apress.BankingApi.Models.Account;
 import com.apress.BankingApi.Models.Deposit;
 import com.apress.BankingApi.Repos.AccountRepository;
 import com.apress.BankingApi.Repos.DepositRepository;
+import jakarta.persistence.EntityNotFoundException;
 import org.slf4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -32,8 +34,11 @@ import java.util.List;
         }
     }
     // Create
-    public Deposit createDeposit(Deposit deposit, Long accountId) {
-        deposit.setPayeeId(accountId);
+    public Deposit createDeposit(Deposit deposit, Long accountId)
+    {
+        Account account = accountRepository.findById(accountId).orElseThrow(()
+                -> new EntityNotFoundException("Account not found with id: " + accountId));
+        deposit.setPayee(account);
         return depositRepository.save(deposit);
     }
     // Get
@@ -52,7 +57,7 @@ import java.util.List;
         verifyDepositById(deposit.getId());
         Deposit oldDeposit = getDepositById(deposit.getId());
         deposit.setId(oldDeposit.getId());
-        deposit.setPayeeId(oldDeposit.getPayeeId());
+        deposit.setPayee(oldDeposit.getPayee());
         return depositRepository.save(deposit);
     }
     // Delete

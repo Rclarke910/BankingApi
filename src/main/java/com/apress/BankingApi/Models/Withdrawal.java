@@ -4,38 +4,42 @@ import com.apress.BankingApi.Enums.Medium;
 import com.apress.BankingApi.Enums.Status;
 import com.apress.BankingApi.Enums.TransactionType;
 import jakarta.persistence.*;
+import jakarta.validation.constraints.NotNull;
+import org.hibernate.annotations.CreationTimestamp;
+
+import java.time.LocalDateTime;
 
 @Entity
 public class Withdrawal {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name="WITHDRAWAL_ID")
     private Long id;
 
     @Enumerated(EnumType.STRING)
     private TransactionType type;
-    private String transactionDate;
-
+    @CreationTimestamp
+    private LocalDateTime transactionDate;
     @Enumerated(EnumType.STRING)
     private Status status;
     @Enumerated(EnumType.STRING)
     private Medium medium;
+    @NotNull
     private Double amount;
     private String description;
     @ManyToOne
     @JoinColumn(name = "account_id")
     private Account payer;
-
     public Long getId() {
         return id;
     }
-
     public void setId(Long id) {
         this.id = id;
     }
-    public String getTransactionDate() {
+    public LocalDateTime getTransactionDate() {
         return transactionDate;
     }
-    public void setTransactionDate(String transactionDate) {
+    public void setTransactionDate(LocalDateTime transactionDate) {
         this.transactionDate = transactionDate;
     }
     public Account getPayer() {
@@ -84,5 +88,18 @@ public class Withdrawal {
 
     public void setMedium(Medium medium) {
         this.medium = medium;
+    }
+
+    public Withdrawal(TransactionType type, Account payer,
+                      Medium medium, Double amount, String description) {
+        this.type = type;
+        this.status = Status.Pending;
+        this.medium = medium;
+        this.amount = amount;
+        this.description = description;
+        this.payer = payer;
+    }
+    public Withdrawal()
+    {
     }
 }

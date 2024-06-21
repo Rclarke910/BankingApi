@@ -17,11 +17,11 @@ public class WithdrawalResponse {
     @Autowired
     WithdrawalService withdrawalService;
 
-    public ResponseEntity<?> getAccountWithdrawals(Long accoumtID){
+    public ResponseEntity<?> getAccountWithdrawals(Long accountID){
         try {
 
             Body body = new Body();
-            body.setData(withdrawalService.getAllAccountWithdrawals(accoumtID));
+            body.setData(withdrawalService.getAllAccountWithdrawals(accountID));
             body.setCode(HttpStatus.OK.value());
             body.setMessage("Successfully retrieved all withdrawals");
 
@@ -82,6 +82,7 @@ public class WithdrawalResponse {
     }
     public ResponseEntity<?> updateWithdrawal(Withdrawal withdrawal, Long withdrawalId) {
         try {
+
            Withdrawal changingWithdrawal = withdrawalService.updateWithdrawal(withdrawalId, withdrawal);
 
             if (changingWithdrawal != null) {

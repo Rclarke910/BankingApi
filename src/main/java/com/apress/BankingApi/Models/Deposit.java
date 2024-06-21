@@ -1,36 +1,54 @@
 package com.apress.BankingApi.Models;
 
+import com.apress.BankingApi.Enums.Medium;
+import com.apress.BankingApi.Enums.Status;
+import com.apress.BankingApi.Enums.TransactionType;
 import jakarta.persistence.*;
+import jakarta.validation.constraints.NotNull;
+import org.hibernate.annotations.CreationTimestamp;
+
+import java.time.LocalDateTime;
 
 @Entity
 public class Deposit {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name="DEPOSIT_ID")
     private Long id;
-
-    private String type;
-    private String transactionDate;
-
-    private String status;
-    private Long payeeId;
-
-    private String medium;
+    @NotNull
+    @Enumerated(EnumType.STRING)
+    private TransactionType type;
+    @CreationTimestamp
+    private LocalDateTime transactionDate;
+    @Enumerated(EnumType.STRING)
+    private Status status;
+    @ManyToOne
+    @JoinColumn(name="ACCOUNT_ID")
+    private Account payee;
+    private Medium medium;
     private Double amount;
     private String description;
 
-
     public Deposit() {
     }
-
-    public Deposit(Long id, String type, String transactionDate, String status, Long payeeId, String medium, Double amount, String description) {
-        this.id = id;
+    public Deposit(TransactionType type,
+                   Account payee, Medium medium, Double amount, String description) {
         this.type = type;
-        this.transactionDate = transactionDate;
-        this.status = status;
-        this.payeeId = payeeId;
+        this.status = Status.Pending;
+        this.payee = payee;
         this.medium = medium;
         this.amount = amount;
         this.description = description;
+    }
+    public Deposit(TransactionType type,
+                   Account payee, Medium medium, Double amount)
+    {
+        this.type = type;
+        this.status = Status.Pending;
+        this.payee = payee;
+        this.medium = medium;
+        this.amount = amount;
+        this.description = "P2P transfer";
     }
 
     public Long getId() {
@@ -41,43 +59,44 @@ public class Deposit {
         this.id = id;
     }
 
-    public String getType() {
+    public TransactionType getType() {
         return type;
     }
 
-    public void setType(String type) {
+    public void setType(TransactionType type) {
         this.type = type;
     }
 
-    public String getTransactionDate() {
+    public LocalDateTime getTransactionDate() {
         return transactionDate;
     }
 
-    public void setTransactionDate(String transactionDate) {
+    public void setTransactionDate(LocalDateTime transactionDate)
+    {
         this.transactionDate = transactionDate;
     }
 
-    public String getStatus() {
+    public Status getStatus() {
         return status;
     }
 
-    public void setStatus(String status) {
+    public void setStatus(Status status) {
         this.status = status;
     }
 
-    public Long getPayeeId() {
-        return payeeId;
+    public Account getPayee() {
+        return payee;
     }
 
-    public void setPayeeId(Long payeeId) {
-        this.payeeId = payeeId;
+    public void setPayee(Account payee) {
+        this.payee = payee;
     }
 
-    public String getMedium() {
+    public Medium getMedium() {
         return medium;
     }
 
-    public void setMedium(String medium) {
+    public void setMedium(Medium medium) {
         this.medium = medium;
     }
 
@@ -97,17 +116,4 @@ public class Deposit {
         this.description = description;
     }
 
-    @Override
-    public String toString() {
-        return "Deposit{" +
-                "id=" + id +
-                ", type=" + type +
-                ", transactionDate=" + transactionDate +
-                ", status=" + status +
-                ", payeeId=" + payeeId +
-                ", medium='" + medium + '\'' +
-                ", amount=" + amount +
-                ", description='" + description + '\'' +
-                '}';
-    }
 }
