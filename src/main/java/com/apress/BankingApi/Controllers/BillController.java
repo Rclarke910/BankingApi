@@ -54,24 +54,6 @@ public class BillController {
                 .toUri());
         return new ResponseEntity<>(null, responseHeaders, HttpStatus.CREATED);
     }
-//@PostMapping("/accounts/{accountId}/bills")
-//public ResponseEntity<?> createBill(@PathVariable Long accountId, @RequestBody Bill bill) {
-//    Account account = accountService.getAccountById(accountId); // Fetch Account by accountId
-//    if (account == null) {
-//        throw new ResourceNotFoundException("Account " + accountId + " not found");
-//    }
-//    bill.setAccount(account); // Set the Account in Bill
-//    ResponseEntity<?> createdBill = billResponse.createBill(bill);
-//    HttpHeaders responseHeaders = new HttpHeaders();
-//    responseHeaders.setLocation(ServletUriComponentsBuilder
-//            .fromCurrentRequest()
-//            .path("/{id}")
-//            .buildAndExpand(bill.getId())
-//            .toUri());
-//    return new ResponseEntity<>(null, responseHeaders, HttpStatus.CREATED);
-//}
-
-
 
     @RequestMapping(value="/bills/{billId}", method=RequestMethod.PUT)
     public ResponseEntity<?> updateBill(@RequestBody Bill bill, @PathVariable Long billId) {
