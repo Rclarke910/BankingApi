@@ -1,16 +1,15 @@
 package com.apress.BankingApi.Models;
 
 import com.apress.BankingApi.Enums.Status;
-import jakarta.persistence.Column;
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.Id;
+import jakarta.persistence.*;
+
 @Entity
 public class Bill {
     @Id
-    @GeneratedValue
-    @Column(name = "BILL_ID")
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column (name = "BILL_ID")
     private Long id;
+    @Enumerated(EnumType.STRING)
     private Status status;
     private String payee;
     private String nickname;

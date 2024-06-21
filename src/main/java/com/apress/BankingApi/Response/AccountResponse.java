@@ -126,11 +126,13 @@ public class AccountResponse {
 
             return new ResponseEntity<>(body, HttpStatus.NOT_FOUND);
         } catch (Exception e) {
-            Body body = new Body();
-            body.setCode(HttpStatus.INTERNAL_SERVER_ERROR.value());
-            body.setMessage("Error deleting account");
 
-            return new ResponseEntity<>(body, HttpStatus.INTERNAL_SERVER_ERROR);
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build();
+//            Body body = new Body();
+//            body.setCode(HttpStatus.INTERNAL_SERVER_ERROR.value());
+//            body.setMessage("Error deleting account");
+//
+//            return new ResponseEntity<>(body, HttpStatus.INTERNAL_SERVER_ERROR);
         }
     }
     public ResponseEntity<?> getAccountsByCustomerId(Long customerId) {

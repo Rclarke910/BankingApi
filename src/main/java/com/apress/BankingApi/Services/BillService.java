@@ -3,22 +3,29 @@ package com.apress.BankingApi.Services;
 import com.apress.BankingApi.Exception.CustomerNotFoundException;
 import com.apress.BankingApi.Models.Bill;
 import com.apress.BankingApi.Repos.BillRepository;
+import com.apress.BankingApi.Repos.CustomerRepository;
 import jakarta.persistence.PostUpdate;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
 import java.util.Optional;
 @Service
 public class BillService {
     @Autowired
     private BillRepository billRepository;
+    @Autowired
+    private CustomerRepository customerRepository;
     public void saveBill(Bill bill)
     {
         billRepository.save(bill);
     }
-    public Iterable<Bill> getAllBills (){
-        return billRepository.findAll();
+    public List<Bill> getBillsByAccountId(Long accountId) {
+        return billRepository.findByAccountId(accountId);
     }
+//    public List<Bill> getBillsByCustomerId(Long customerId) {
+//        return billRepository.findByCustomerId(customerId);
+//    }
     public Bill createBill(Bill bill) throws CustomerNotFoundException {
 
        // logger.info("successfully created Customer");
@@ -36,8 +43,8 @@ public class BillService {
 
     @PostUpdate
     public Bill updateBill(Bill bill, Long id){
-        for(Bill b : getAllBills()) {
-            if (b.getId() == (id)) {
+        for(Bill b : getBillsByAccountId(id)) {
+            if (b.getId().equals(id)) {
                 billRepository.save(bill);
             }
         }

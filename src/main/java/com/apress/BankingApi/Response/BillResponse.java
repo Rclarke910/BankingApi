@@ -35,10 +35,10 @@ public class BillResponse {
         }
     }
 
-    public ResponseEntity<?> getAllBills() {
+    public ResponseEntity<?> getAllBills(Long accountId) {
         try {
             Body body = new Body();
-            body.setData(billservice.getAllBills());
+            body.setData(billservice.getBillsByAccountId(accountId));
             body.setCode(HttpStatus.OK.value());
             body.setMessage("Successfully retrieved Bills");
 
