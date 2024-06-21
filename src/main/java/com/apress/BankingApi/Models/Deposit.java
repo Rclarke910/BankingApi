@@ -5,7 +5,6 @@ import com.apress.BankingApi.Enums.TransactionType;
 import jakarta.persistence.*;
 import org.hibernate.resource.transaction.spi.TransactionStatus;
 
-import java.time.LocalDateTime;
 @Entity
 public class Deposit {
     @Id
@@ -13,7 +12,7 @@ public class Deposit {
     private Long id;
     @Enumerated(EnumType.STRING)
     private TransactionType type;
-    private LocalDateTime transactionDate;
+    private String transactionDate;
     @Enumerated(EnumType.STRING)
     private TransactionStatus status;
     private Long payeeId;
@@ -26,7 +25,7 @@ public class Deposit {
     public Deposit() {
     }
 
-    public Deposit(Long id, TransactionType type, LocalDateTime transactionDate, TransactionStatus status, Long payeeId, Medium medium, Double amount, String description) {
+    public Deposit(Long id, TransactionType type, String transactionDate, TransactionStatus status, Long payeeId, Medium medium, Double amount, String description) {
         this.id = id;
         this.type = type;
         this.transactionDate = transactionDate;
@@ -53,11 +52,11 @@ public class Deposit {
         this.type = type;
     }
 
-    public LocalDateTime getTransactionDate() {
+    public String getTransactionDate() {
         return transactionDate;
     }
 
-    public void setTransactionDate(LocalDateTime transactionDate) {
+    public void setTransactionDate(String transactionDate) {
         this.transactionDate = transactionDate;
     }
 

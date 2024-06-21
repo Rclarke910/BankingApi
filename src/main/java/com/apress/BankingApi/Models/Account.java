@@ -20,6 +20,12 @@ public class Account {
     @JoinColumn(name = "customer_id")
     private Customer customer;
 
+    public Account() {}
+
+    public Account(Long id) {
+        this.id = id;
+    }
+
     public Integer getRewards() {
         return rewards;
     }

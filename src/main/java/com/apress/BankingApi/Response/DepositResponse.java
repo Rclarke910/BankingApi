@@ -1,15 +1,15 @@
 package com.apress.BankingApi.Response;
 
-import com.apress.BankingApi.Exception.ResourceNotFoundException;
 import com.apress.BankingApi.Models.Deposit;
 import com.apress.BankingApi.Services.DepositService;
 import com.apress.BankingApi.dto.Body;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.stereotype.Component;
 
 import java.util.Optional;
-
+@Component
 public class DepositResponse {
     @Autowired
     DepositService depositService;
@@ -97,6 +97,24 @@ public class DepositResponse {
             }
         } finally {
 
+        }
+    }
+
+    public ResponseEntity<?> deleteDeposit(Long depositId) {
+        try {
+            depositService.deleteDepositById(depositId);
+
+            Body body = new Body();
+            body.setCode(HttpStatus.OK.value());
+            body.setMessage("Deposit deleted successfully");
+
+            return new ResponseEntity<>(body, HttpStatus.OK);
+        } catch (Exception exception) {
+            Body body = new Body();
+            body.setCode(HttpStatus.INTERNAL_SERVER_ERROR.value());
+            body.setMessage("Error deleting Deposit");
+
+            return new ResponseEntity<>(body, HttpStatus.INTERNAL_SERVER_ERROR);
         }
     }
 
