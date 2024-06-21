@@ -3,6 +3,7 @@ package com.apress.BankingApi.Controllers;
 import com.apress.BankingApi.Models.Deposit;
 import com.apress.BankingApi.Repos.AccountRepository;
 import com.apress.BankingApi.Repos.DepositRepository;
+import com.apress.BankingApi.Response.DepositResponse;
 import com.apress.BankingApi.Services.DepositService;
 import jakarta.validation.Valid;
 import org.slf4j.Logger;
@@ -18,7 +19,7 @@ import java.util.Optional;
 
 
 @RestController
-@RequestMapping("/accounts/{accountId}/deposits")
+
 public class DepositController {
 
     @Autowired
@@ -30,22 +31,21 @@ public class DepositController {
     @Autowired
     private DepositService depositService;
 
+    @Autowired
+  private   DepositResponse depositResponse;
+
 //    @GetMapping
 //    public ResponseEntity<List<Deposit>> getAllDeposits(@PathVariable Long accountId) {
 //        List<Deposit> deposits = depositRepository.findDepositById(accountId);
 //        return ResponseEntity.ok(deposits);
 //    }
 
-    @GetMapping("/{depositId}")
-    public ResponseEntity<Deposit> getDepositById(@PathVariable Long accountId, @PathVariable Long depositId) {
-        Optional<Deposit> depositOptional = depositRepository.findById(depositId);
-        if (depositOptional.isPresent() && depositOptional.get().getPayeeId().equals(accountId)) {
-            return ResponseEntity.ok(depositOptional.get());
-        } else {
-            return ResponseEntity.notFound().build();
-        }
-    }
-    @PostMapping
+    @GetMapping(value = "/deposits/{depositId}")
+   public ResponseEntity<?> getDepositById(@PathVariable Long depositId) {
+       return new ResponseEntity<>(depositResponse.getDepositById(depositId), HttpStatus.OK);
+   }
+
+    @PostMapping(value = "/accounts/{accountId}/deposits")
     public ResponseEntity<Deposit> createDeposit(@PathVariable Long accountId, @Valid @RequestBody Deposit deposit) {
         if (!accountRepository.existsById(accountId)) {
             return ResponseEntity.status(HttpStatus.NOT_FOUND).body(null);
@@ -55,7 +55,7 @@ public class DepositController {
         return ResponseEntity.status(HttpStatus.CREATED).body(savedDeposit);
     }
 
-    @PutMapping("/{depositId}")
+    @PutMapping(value = "/deposits/{depositId}")
     public ResponseEntity<Deposit> updateDeposit(@PathVariable Long accountId, @PathVariable Long depositId, @Valid @RequestBody Deposit deposit) {
         Optional<Deposit> existingDepositOptional = depositRepository.findById(depositId);
 
@@ -74,7 +74,7 @@ public class DepositController {
         }
     }
 
-    @DeleteMapping("/{depositId}")
+    @DeleteMapping(value = "/deposits/{depositId}")
     public ResponseEntity<Void> deleteDeposit(@PathVariable Long accountId, @PathVariable Long depositId) {
         Optional<Deposit> depositOptional = depositRepository.findById(depositId);
         if (depositOptional.isPresent() && depositOptional.get().getPayeeId().equals(accountId)) {
@@ -85,10 +85,9 @@ public class DepositController {
         }
     }
 
-    @GetMapping("/deposits")
-    public ResponseEntity<List<Deposit>> getAllDeposits() {
-        List<Deposit> deposits = depositService.getAllDeposits();
-        return ResponseEntity.ok(deposits);
+    @GetMapping("/accounts/{accountId}/deposits")
+    public ResponseEntity<?> getAllDeposits() {
+        return new ResponseEntity<>(depositResponse.getAllDeposits(), HttpStatus.OK);
     }
 
 }
