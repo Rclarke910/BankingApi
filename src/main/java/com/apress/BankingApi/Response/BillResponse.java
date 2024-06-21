@@ -15,9 +15,9 @@ public class BillResponse {
     @Autowired
     BillService billservice;
 
-    public ResponseEntity<?> createBill(Bill bill) {
+    public ResponseEntity<?> createBill(Bill bill, Long accountId) {
         try {
-            Bill createdBill = billservice.createBill(bill);
+            Bill createdBill = billservice.createBill(bill, accountId);
 
             Body body = new Body();
             body.setData(createdBill);
@@ -34,8 +34,25 @@ public class BillResponse {
 
         }
     }
+    public ResponseEntity<?> getAllBillsByCustomerId(Long customerId){
+        try {
+            Body body = new Body();
+            body.setData(billservice.getAllCustomerBills(customerId));
+            body.setCode(HttpStatus.OK.value());
+            body.setMessage("Successfully retrieved Bills");
 
-    public ResponseEntity<?> getAllBills(Long accountId) {
+            return new ResponseEntity<>(body, HttpStatus.OK);
+        } catch (Exception exception) {
+            Body body = new Body();
+            body.setCode(HttpStatus.NOT_FOUND.value());
+            body.setMessage("Error fetching Bill");
+
+            return new ResponseEntity<>(body, HttpStatus.NOT_FOUND);
+        }
+
+    }
+
+    public ResponseEntity<?> getAllBillsByAccountId(Long accountId) {
         try {
             Body body = new Body();
             body.setData(billservice.getBillsByAccountId(accountId));
