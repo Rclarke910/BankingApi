@@ -8,6 +8,7 @@ import com.apress.BankingApi.Repos.BillRepository;
 import com.apress.BankingApi.Repos.CustomerRepository;
 import jakarta.persistence.EntityNotFoundException;
 import jakarta.persistence.PostUpdate;
+import jakarta.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -29,15 +30,13 @@ public class BillService {
         return billRepository.findByAccountId(accountId);
     }
     public List <Bill> getAllCustomerBills(Long customer_Id) throws Exception {
-        billRepository.findById(customer_Id);
+
         return billRepository.findByCustomerId(customer_Id);
     }
     public Bill createBill(Bill bill, Long accountId) throws CustomerNotFoundException {
         Account account = accountRepository.findById(accountId)
                 .orElseThrow(() -> new EntityNotFoundException("Customer not found with id: " + accountId));
        bill.setAccount(account);
-
-       // logger.info("successfully created Customer");
         return billRepository.save(bill);
 
     }
@@ -50,13 +49,23 @@ public class BillService {
         return billRepository.findById(id);
     }
 
-    @PostUpdate
-    public Bill updateBill(Bill bill, Long id){
-        for(Bill b : getBillsByAccountId(id)) {
-            if (b.getId().equals(id)) {
-                billRepository.save(bill);
-            }
-        }
-        return bill;
-    }
+    @Transactional
+    public Bill updateBill(Bill bill, Long id) {
+        // Fetch the existing bill to ensure it exists
+        Bill existingBill = billRepository.findById(id)
+                .orElseThrow(() -> new EntityNotFoundException("Bill with id " + id + " not found"));
+
+        // Update the fields of the existing bill with the new data
+        existingBill.setUpcoming_payment_date(bill.getUpcoming_payment_date());
+        existingBill.setPayee(bill.getPayee());
+        existingBill.setRecurring_date(bill.getRecurring_date());
+        existingBill.setNickname(bill.getNickname());
+        existingBill.setPayment_amount(bill.getPayment_amount());
+        existingBill.setPayment_date(bill.getPayment_date());
+        existingBill.setStatus(bill.getStatus());
+        // Continue setting other fields as needed
+
+        // Save the updated bill back to the repository
+        return billRepository.save(existingBill);
+}
 }
