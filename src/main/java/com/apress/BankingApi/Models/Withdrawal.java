@@ -1,33 +1,29 @@
 package com.apress.BankingApi.Models;
 
-import com.apress.BankingApi.Enums.AccountType;
 import com.apress.BankingApi.Enums.Medium;
 import com.apress.BankingApi.Enums.Status;
+import com.apress.BankingApi.Enums.TransactionType;
 import jakarta.persistence.*;
 
 @Entity
 public class Withdrawal {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "Withdrawal_ID")
     private Long id;
+
     @Enumerated(EnumType.STRING)
-    @Column(name = "Withdrawal_Type")
-    private AccountType type;
-    @Column(name = "Withdrawal_Date")
-    private String transaction_date;
+    private TransactionType type;
+    private String transactionDate;
+
     @Enumerated(EnumType.STRING)
-    @Column(name = "Withdrawal_Status")
     private Status status;
-    @Column(name = "Withdrawal_Payee")
-    private Long payee_id;
     @Enumerated(EnumType.STRING)
-    @Column(name = "Withdrawal_Medium")
     private Medium medium;
-    @Column(name = "Withdrawal_amount")
     private Double amount;
-    @Column(name = "Withdrawal_Description")
     private String description;
+    @ManyToOne
+    @JoinColumn(name = "account_id")
+    private Account payer;
 
     public Long getId() {
         return id;
@@ -36,21 +32,18 @@ public class Withdrawal {
     public void setId(Long id) {
         this.id = id;
     }
-
-    public String getTransaction_date() {
-        return transaction_date;
+    public String getTransactionDate() {
+        return transactionDate;
+    }
+    public void setTransactionDate(String transactionDate) {
+        this.transactionDate = transactionDate;
+    }
+    public Account getPayer() {
+        return payer;
     }
 
-    public void setTransaction_date(String transaction_date) {
-        this.transaction_date = transaction_date;
-    }
-
-    public Long getPayee_id() {
-        return payee_id;
-    }
-
-    public void setPayee_id(Long payee_id) {
-        this.payee_id = payee_id;
+    public void setPayer(Account payer) {
+        this.payer = payer;
     }
 
     public Double getAmount() {
@@ -69,11 +62,11 @@ public class Withdrawal {
         this.description = description;
     }
 
-    public AccountType getType() {
+    public TransactionType getType() {
         return type;
     }
 
-    public void setType(AccountType type) {
+    public void setType(TransactionType type) {
         this.type = type;
     }
 

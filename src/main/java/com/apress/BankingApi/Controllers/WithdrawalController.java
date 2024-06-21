@@ -14,7 +14,7 @@ public class WithdrawalController {
     @Autowired
     private WithdrawalResponse withdrawalResponse;
 
-    @RequestMapping(value = "/accounts/{accountId}/withdrawals", method = RequestMethod.GET)
+    @RequestMapping(value = "/accounts/{accountID}/withdrawals", method = RequestMethod.GET)
     public ResponseEntity<?> getAccountsWithdrawals(@PathVariable Long accountID){
         return new ResponseEntity<>(withdrawalResponse.getAccountWithdrawals(accountID), HttpStatus.OK);
     }
@@ -26,7 +26,7 @@ public class WithdrawalController {
 
     @RequestMapping(value = "accounts/{accountID}/withdrawals", method = RequestMethod.POST)
     public ResponseEntity<?> createWithdrawal(@Valid @RequestBody Withdrawal withdrawal,@PathVariable Long accountID) {
-        return new ResponseEntity<>(withdrawalResponse.createWithdrawal(withdrawal), HttpStatus.CREATED);
+        return new ResponseEntity<>(withdrawalResponse.createWithdrawal(withdrawal,accountID), HttpStatus.CREATED);
     }
 
     @RequestMapping(value="/withdrawals/{withdrawalID}", method=RequestMethod.PUT)
