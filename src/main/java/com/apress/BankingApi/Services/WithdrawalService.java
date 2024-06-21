@@ -1,6 +1,7 @@
 package com.apress.BankingApi.Services;
 
 import com.apress.BankingApi.Models.Account;
+import com.apress.BankingApi.Models.Customer;
 import com.apress.BankingApi.Models.Withdrawal;
 import com.apress.BankingApi.Repos.AccountRepository;
 import com.apress.BankingApi.Repos.WithdrawalRepository;
@@ -15,23 +16,28 @@ public class WithdrawalService {
    private WithdrawalRepository withdrawalRepo;
 
    @Autowired
-   private AccountRepository accountRepo;
-
-    public void verifyAccount(long id) {
-        Optional<Account> account = accountRepo.findById(id);
-        if(account.isEmpty()){
-            throw new EntityNotFoundException("Account not found");
-        }
-    }
+   private AccountRepository accountRepository;
+//
+//    public void verifyAccount(long id) {
+//        Optional<Account> account = accountRepo.findById(id);
+//        if(account.isEmpty()){
+//            throw new EntityNotFoundException("Account not found");
+//        }
+//    }
 
     public Iterable<Withdrawal> getAllWithdrawals(){
             return withdrawalRepo.findAll();
     }
-
+    public Iterable<Withdrawal> getAllAccountWithdrawals(long accountID)
+    {
+        return withdrawalRepo.findByAccountId(accountID);
+    }
     public Optional<Withdrawal> getWithdrawalByID(Long withdrawalId){
         return withdrawalRepo.findById(withdrawalId);
     }
-    public Withdrawal createWithdrawal(Withdrawal withdrawal){
+    public Withdrawal createWithdrawal(Withdrawal withdrawal, long accountId){
+        Account payer = accountRepository.findById(accountId).orElseThrow(() -> new EntityNotFoundException("Account not found with id: " + accountId));
+        withdrawal.setPayer(payer);
         return withdrawalRepo.save(withdrawal);
     }
     public Withdrawal updateWithdrawal(Long id, Withdrawal withdrawal){

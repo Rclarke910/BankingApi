@@ -21,7 +21,7 @@ public class WithdrawalResponse {
         try {
 
             Body body = new Body();
-            body.setData(withdrawalService.getAllWithdrawals());
+            body.setData(withdrawalService.getAllAccountWithdrawals(accoumtID));
             body.setCode(HttpStatus.OK.value());
             body.setMessage("Successfully retrieved all withdrawals");
 
@@ -61,9 +61,9 @@ public class WithdrawalResponse {
             return new ResponseEntity<>(body, HttpStatus.INTERNAL_SERVER_ERROR);
         }
     }
-    public ResponseEntity<?> createWithdrawal(Withdrawal withdrawal){
+    public ResponseEntity<?> createWithdrawal(Withdrawal withdrawal, long accountID){
         try{
-            Withdrawal createdWithdrawal = withdrawalService.createWithdrawal(withdrawal);
+            Withdrawal createdWithdrawal = withdrawalService.createWithdrawal(withdrawal,accountID);
 
             Body body = new Body();
             body.setData(createdWithdrawal);
