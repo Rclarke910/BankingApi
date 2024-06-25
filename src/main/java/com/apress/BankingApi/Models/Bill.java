@@ -5,12 +5,15 @@ import jakarta.persistence.*;
 
 @Entity
 public class Bill {
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column (name = "BILL_ID")
     private Long id;
+
     @Enumerated(EnumType.STRING)
     private Status status;
+
     private String payee;
     private String nickname;
     private String creation_date;

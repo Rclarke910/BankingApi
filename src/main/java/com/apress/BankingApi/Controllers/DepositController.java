@@ -27,7 +27,8 @@ public class DepositController {
     }
     @RequestMapping(value = "/accounts/{accountId}/deposits", method = RequestMethod.POST)
     public ResponseEntity<?> createDeposit(@PathVariable Long accountId, @Valid @RequestBody Deposit deposit) {
-        return new ResponseEntity<>(depositResponse.createDeposit(deposit, accountId), HttpStatus.CREATED);
+        deposit.setPayeeId(accountId);
+        return new ResponseEntity<>(depositResponse.createDeposit(deposit), HttpStatus.CREATED);
     }
     @RequestMapping(value = "/deposits/{depositId}", method = RequestMethod.PUT)
     public ResponseEntity<?> updateDeposit(@RequestBody Deposit deposit, @PathVariable Long depositId) {
