@@ -1,6 +1,7 @@
 package com.apress.BankingApi.Services;
 
 import com.apress.BankingApi.Exception.CustomerNotFoundException;
+import com.apress.BankingApi.Exception.ResourceNotFoundException;
 import com.apress.BankingApi.Models.Account;
 import com.apress.BankingApi.Models.Bill;
 import com.apress.BankingApi.Repos.AccountRepository;
@@ -22,6 +23,8 @@ public class BillService {
     private CustomerRepository customerRepository;
     @Autowired
     private AccountRepository accountRepository;
+
+
     public void saveBill(Bill bill)
     {
         billRepository.save(bill);
@@ -29,7 +32,7 @@ public class BillService {
     public List<Bill> getBillsByAccountId(Long accountId) {
         return billRepository.findByAccountId(accountId);
     }
-    public List <Bill> getAllCustomerBills(Long customer_Id) throws Exception {
+    public List<Bill> getAllCustomerBills(Long customer_Id) {
 
         return billRepository.findByCustomerId(customer_Id);
     }

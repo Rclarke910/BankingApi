@@ -15,9 +15,9 @@ public class DepositResponse {
     @Autowired
     DepositService depositService;
 
-    public ResponseEntity<?> createDeposit(Deposit deposit, Long accountId) {
+    public ResponseEntity<?> createDeposit(Deposit deposit) {
         try {
-            Deposit createdDeposit = depositService.createDeposit(deposit, accountId);
+            Deposit createdDeposit = depositService.createDeposit(deposit);
             Body body = new Body();
             body.setData(createdDeposit);
             body.setCode(HttpStatus.CREATED.value());

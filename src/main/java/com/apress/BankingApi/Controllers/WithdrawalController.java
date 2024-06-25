@@ -20,8 +20,8 @@ public class WithdrawalController {
     }
 
     @RequestMapping(value="/withdrawals/{withdrawalID}", method=RequestMethod.GET)
-    public ResponseEntity<?> getWithdrawalByID(@PathVariable Long withdrawalId){
-        return new ResponseEntity<> (withdrawalResponse.getWithdrawalById(withdrawalId), HttpStatus.OK);
+    public ResponseEntity<?> getWithdrawalByID(@PathVariable Long withdrawalID){
+        return new ResponseEntity<> (withdrawalResponse.getWithdrawalById(withdrawalID), HttpStatus.OK);
     }
 
     @RequestMapping(value = "accounts/{accountID}/withdrawals", method = RequestMethod.POST)

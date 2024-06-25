@@ -32,14 +32,13 @@ import java.util.List;
         }
     }
     // Create
-    public Deposit createDeposit(Deposit deposit, Long accountId) {
-        deposit.setPayeeId(accountId);
+    public Deposit createDeposit(Deposit deposit) {
         return depositRepository.save(deposit);
     }
     // Get
     public List<Deposit> getDepositsByAccountId(Long accountId) {
         verifyAccountById(accountId);
-        return depositRepository.findDepositById(accountId);
+        return depositRepository.findByPayeeId(accountId);
     }
     // Get By Account ID
     public Deposit getDepositById(Long id) {
@@ -49,11 +48,18 @@ import java.util.List;
     }
     // Update
     public Deposit updateDeposit(Deposit deposit, Long depositId) {
-        verifyDepositById(deposit.getId());
-        Deposit oldDeposit = getDepositById(deposit.getId());
-        deposit.setId(oldDeposit.getId());
-        deposit.setPayeeId(oldDeposit.getPayeeId());
-        return depositRepository.save(deposit);
+        verifyDepositById(depositId);
+        Deposit depositToBeUpdated = depositRepository.findById(depositId)
+                .orElseThrow(() -> new ResourceNotFoundException("Deposit with id '" + depositId + "' is not found"));
+        depositToBeUpdated.setType(deposit.getType());
+        depositToBeUpdated.setTransactionDate(deposit.getTransactionDate());
+        depositToBeUpdated.setStatus(deposit.getStatus());
+        depositToBeUpdated.setPayeeId(deposit.getPayeeId());
+        depositToBeUpdated.setMedium(deposit.getMedium());
+        depositToBeUpdated.setAmount(deposit.getAmount());
+        depositToBeUpdated.setDescription(deposit.getDescription());
+
+        return depositRepository.save(depositToBeUpdated);
     }
     // Delete
     public void deleteDepositById(Long id) {

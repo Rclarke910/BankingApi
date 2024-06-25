@@ -13,14 +13,19 @@ public class Withdrawal {
 
     @Enumerated(EnumType.STRING)
     private TransactionType type;
+
     private String transactionDate;
 
     @Enumerated(EnumType.STRING)
     private Status status;
+
     @Enumerated(EnumType.STRING)
     private Medium medium;
+
     private Double amount;
+
     private String description;
+
     @ManyToOne
     @JoinColumn(name = "account_id")
     private Account payer;
