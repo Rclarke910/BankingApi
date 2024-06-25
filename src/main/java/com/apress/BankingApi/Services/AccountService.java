@@ -1,5 +1,6 @@
 package com.apress.BankingApi.Services;
 
+import com.apress.BankingApi.Exception.ResourceNotFoundException;
 import com.apress.BankingApi.Models.Account;
 import com.apress.BankingApi.Models.Customer;
 import com.apress.BankingApi.Repos.AccountRepository;
@@ -45,7 +46,10 @@ public class AccountService {
        return accountRepository.save(account);
     }
 
-    public void deleteAccount(long id){
+    public void deleteAccount(long id) {
+        if (!accountRepository.existsById(id)) {
+            throw new ResourceNotFoundException("Account with id '" + id + "' is not found");
+        }
         accountRepository.deleteById(id);
     }
 }
