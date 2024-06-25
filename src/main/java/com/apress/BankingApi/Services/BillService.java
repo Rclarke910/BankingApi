@@ -54,11 +54,9 @@ public class BillService {
 
     @Transactional
     public Bill updateBill(Bill bill, Long id) {
-        // Fetch the existing bill to ensure it exists
+
         Bill existingBill = billRepository.findById(id)
                 .orElseThrow(() -> new EntityNotFoundException("Bill with id " + id + " not found"));
-
-        // Update the fields of the existing bill with the new data
         existingBill.setUpcoming_payment_date(bill.getUpcoming_payment_date());
         existingBill.setPayee(bill.getPayee());
         existingBill.setRecurring_date(bill.getRecurring_date());
@@ -66,9 +64,8 @@ public class BillService {
         existingBill.setPayment_amount(bill.getPayment_amount());
         existingBill.setPayment_date(bill.getPayment_date());
         existingBill.setStatus(bill.getStatus());
-        // Continue setting other fields as needed
 
-        // Save the updated bill back to the repository
+
         return billRepository.save(existingBill);
 }
 }
